@@ -28,10 +28,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 // jo v request frontend se aa rahi h cors ussko entertain krega
-app.use(cors({
-    origin:"http://localhost:3000",
-    methods:["GET","POST","PUT","DELETE"],
-  }))
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        credentials:true,
+    })
+)
 app.use(
     fileUpload({
         useTempFiles:true,
@@ -41,9 +43,7 @@ app.use(
 // cloudinary connect
 cloudinaryConnect();
 
-// static files
 app.use(express.static(path.join(__dirname,'./client/build')))
-
 // routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
@@ -52,7 +52,7 @@ app.use("/api/v1/course", courseRoutes);
 app.use("/api/v1/reach", contactUsRoutes);
 
 
-// default routes
+// // default routes
 // app.get("/",(req,res) => {
 //     return res.json({
 //         success:true,
@@ -60,6 +60,7 @@ app.use("/api/v1/reach", contactUsRoutes);
 //     });
 // });
 
+// static files
 
 
 app.use('*',function(req,res){
